@@ -1,6 +1,6 @@
 # 12 SQL: Employee Tracker
 
-## Your Task
+## My Task
 
 Developers frequently have to create interfaces that allow non-developers to easily view and interact with information stored in databases. These interfaces are called **content management systems (CMS)**. Your assignment this week is to build a command-line application from scratch to manage a company's employee database, using Node.js, Inquirer, and MySQL.
 
@@ -40,6 +40,11 @@ The following video shows an example of the application being used from the comm
 
 [![A video thumbnail shows the command-line employee management application with a play button overlaying the view.](./Assets/12-sql-homework-video-thumbnail.png)](https://2u-20.wistia.com/medias/2lnle7xnpk)
 
+## Command-line Prompt Application Screenshots and Demo video
+
+[![A video thumbnail shows the actual command-line employee management app](./Assets/image.png)](https://drive.google.com/file/d/1laM-BHtw5hACHPQey2AVUJbG-6ypkn-x/view)
+
+[![Snapshot of the command-line employee management application](Assets/screenshot2.png)]
 
 - - -
 © 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
