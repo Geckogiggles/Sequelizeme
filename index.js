@@ -18,12 +18,10 @@ function init() {
                     'add a department',
                     'add a role',
                     'add an employee',
-                    //------------FUTURE DEVELOPMENTS---------
-                    // 'update an employee role',
-                    // 'delete a role',
-                    // 'delete an employee',
-                    // 'delete a department',
-                    //----------------------------------------
+                    'update an employee',
+                    'delete a role',
+                    'delete an employee',
+                    'delete a department',
                 ],
             },
         ])
@@ -51,6 +49,10 @@ function init() {
 
                 case 'add employee':
                     addEmployee();
+                    return;
+
+                case 'update an employee':
+                    updateEmployee();
                     return;
             }
         });
@@ -164,5 +166,34 @@ function addEmployee() {
         }
         )
 }
+
+function updateEmployee() {
+    console.log('i am updating an employee')
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                message: "Which employee would you like to update?",
+                name: 'employee',
+                choices: getEmployeeChoices(),
+            },
+        ])
+}
+
+function getEmployeeChoices() {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            'SELECT * FROM employee', function (err, res) {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log(res)
+                    resolve(res)
+                }
+            }
+        )
+    })
+}
+
 
 init();
