@@ -195,5 +195,33 @@ function getEmployeeChoices() {
     })
 }
 
+function getRoleChoices() {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            'SELECT * FROM role', function (err, res) {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log(res)
+                    resolve(res)
+                }
+            }
+        )
+    })
+}
+function getDepartmentChoices() {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            'SELECT * FROM department', function (err, res) {
+                if (err) {
+                    reject(err)
+                } else {
+                    console.log(res)
+                    resolve(res)
+                }
+            }
+        )
+    })
+}
 
 init();
