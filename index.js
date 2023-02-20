@@ -17,7 +17,7 @@ function init() {
                     'view all employees',
                     'add a department',
                     'add a role',
-                    'add an employee',
+                    'add employee',
                     'update an employee',
                     'delete a role',
                     'delete an employee',
@@ -54,6 +54,18 @@ function init() {
                 case 'update an employee':
                     updateEmployee();
                     return;
+
+                case 'delete an employee':
+                    deleteEmployee();
+                    return;
+
+                case 'delete a role':
+                    deleteRole();
+                    return;
+
+                case 'delete a department':
+                    deleteDepartment();
+                    return;
             }
         });
 }
@@ -70,7 +82,7 @@ function viewDepartments() {
 //View roles
 function viewRoles() {
     connection.query(
-        'SELECT * FROM employee', function (err, res) {
+        'SELECT * FROM role', function (err, res) {
             if (err) throw err;
             console.table(res);
             init();
@@ -80,7 +92,7 @@ function viewRoles() {
 //View Employee
 function viewEmployees() {
     connection.query(
-        'SELECT * FROM role', function (err, res) {
+        'SELECT * FROM employee', function (err, res) {
             if (err) throw err;
             console.table(res);
             init();
@@ -172,56 +184,77 @@ function updateEmployee() {
     inquirer
         .prompt([
             {
-                type: 'list',
-                message: "Which employee would you like to update?",
-                name: 'employee',
-                choices: getEmployeeChoices(),
+                type: 'input',
+                message: "What is the employee's id?",
+                name: 'employee_id',
             },
-        ])
-}
-
-function getEmployeeChoices() {
-    return new Promise((resolve, reject) => {
-        connection.query(
-            'SELECT * FROM employee', function (err, res) {
-                if (err) {
-                    reject(err)
-                } else {
-                    console.log(res)
-                    resolve(res)
-                }
-            }
+            {
+                type: 'input',
+                message: "What is the employee's new role id?",
+                name: 'role_id',
+            },
+        ]).then((answers) => {
+            connection.query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.role_id, answers.employee_id], function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                init();
+            })
+        }
         )
-    })
 }
-
-function getRoleChoices() {
-    return new Promise((resolve, reject) => {
-        connection.query(
-            'SELECT * FROM role', function (err, res) {
-                if (err) {
-                    reject(err)
-                } else {
-                    console.log(res)
-                    resolve(res)
-                }
-            }
+function deleteRole() {
+    console.log('i am deleting a role')
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: "What is the role's id?",
+                name: 'role_id'
+            },
+        ]).then((answers) => {
+            connection.query('DELETE FROM role WHERE id = ?', [answers.role_id], function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                init();
+            })
+        }
         )
-    })
 }
-function getDepartmentChoices() {
-    return new Promise((resolve, reject) => {
-        connection.query(
-            'SELECT * FROM department', function (err, res) {
-                if (err) {
-                    reject(err)
-                } else {
-                    console.log(res)
-                    resolve(res)
-                }
-            }
+function deleteEmployee() {
+    console.log('i am deleting an employee')
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: "What is the employee's id?",
+                name: 'employee_id'
+            },
+        ]).then((answers) => {
+            connection.query('DELETE FROM employee WHERE id = ?', [answers.employee_id], function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                init();
+            })
+        }
         )
-    })
+}
+function deleteDepartment() {
+    console.log('i am deleting a department')
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: "What is the department's id?",
+                name: 'department_id'
+            },
+        ]).then((answers) => {
+            connection.query('DELETE FROM department WHERE id = ?', [answers.department_id], function (err, res) {
+                if (err) throw err;
+                console.table(res);
+                init();
+            })
+        }
+        )
 }
 
 init();
